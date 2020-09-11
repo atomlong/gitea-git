@@ -49,6 +49,9 @@ prepare() {
   # Change default repos path for ArchLinux and some additional settings
   patch -Np1 -i ../gitea-arch-defaults.patch
 
+  export GOPROXY=https://goproxy.io
+  export GO111MODULE=on
+  
   # Be nice to people with read-only home
   GOCACHE="${srcdir}/cache" make vendor
 }
