@@ -1,5 +1,5 @@
 diff --git "a/custom/conf/app.example.ini" "b/custom/conf/app.example.ini"
-index af3418f70..8afdc399e 100644
+index 44c448a4e..d57a839ef 100644
 --- "a/custom/conf/app.example.ini"
 +++ "b/custom/conf/app.example.ini"
 @@ -7,9 +7,9 @@
@@ -23,7 +23,7 @@ index af3418f70..8afdc399e 100644
  SCRIPT_TYPE = bash
  ; DETECTED_CHARSETS_ORDER tie-break order for detected charsets.
  ; If the charsets have equal confidence, tie-breaking will be done by order in this list
-@@ -322,7 +322,7 @@ CERT_FILE = https/cert.pem
+@@ -332,7 +332,7 @@ CERT_FILE = https/cert.pem
  KEY_FILE = https/key.pem
  ; Root directory containing templates and static files.
  ; default is the path where Gitea is executed
@@ -32,7 +32,7 @@ index af3418f70..8afdc399e 100644
  ; Default path for App data
  APP_DATA_PATH = data
  ; Application level GZIP support
-@@ -392,7 +392,7 @@ SQLITE_TIMEOUT = 500
+@@ -402,7 +402,7 @@ SQLITE_TIMEOUT = 500
  ; For iterate buffer, default is 50
  ITERATE_BUFFER_SIZE = 50
  ; Show the database generated SQL
@@ -41,7 +41,7 @@ index af3418f70..8afdc399e 100644
  ; Maximum number of DB Connect retries
  DB_RETRIES = 10
  ; Backoff time per DB retry (time.Duration)
-@@ -514,6 +514,8 @@ PASSWORD_HASH_ALGO = argon2
+@@ -526,6 +526,8 @@ PASSWORD_HASH_ALGO = argon2
  CSRF_COOKIE_HTTP_ONLY = true
  ; Validate against https://haveibeenpwned.com/Passwords to see if a password has been exposed
  PASSWORD_CHECK_PWN = false
@@ -50,7 +50,7 @@ index af3418f70..8afdc399e 100644
  
  [openid]
  ;
-@@ -799,10 +801,10 @@ FORMAT =
+@@ -811,10 +813,10 @@ FORMAT =
  DEFAULT_UI_LOCATION =
  
  [log]
@@ -63,7 +63,7 @@ index af3418f70..8afdc399e 100644
  ; Buffer length of the channel, keep it as it is if you don't know what it is.
  BUFFER_LEN = 10000
  REDIRECT_MACARON_LOG = false
-@@ -827,7 +829,7 @@ COLORIZE = false
+@@ -839,7 +841,7 @@ COLORIZE = false
  
  ; For "console" mode only
  [log.console]
