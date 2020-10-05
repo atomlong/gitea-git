@@ -15,7 +15,7 @@ WorkingDirectory=~
 RuntimeDirectory=gitea
 LogsDirectory=gitea
 Environment=USER=gitea HOME=/var/lib/gitea GITEA_WORK_DIR=/var/lib/gitea
-ExecStart=/usr/bin/gitea web -c /etc/gitea/app.ini
+ExecStart=/usr/bin/gitea web -c /etc/gitea/app.ini -w /var/lib/gitea
 Restart=always
 RestartSec=2s
 CapabilityBoundingSet=
