@@ -6,7 +6,7 @@ on:
     branches:
       - master
   schedule:
-    - cron: 30 15 * * *
+    - cron: 00 15 * * *
 
 jobs:
   build-gitea:
@@ -25,7 +25,7 @@ jobs:
           arch: ${{ matrix.arch }}
           distro: archlinuxarm
           run: |
-            pacman -Syu --needed --noconfirm base-devel rclone
+            pacman -Syu --needed --noconfirm base-devel
             grep -Pq "^alarm:" /etc/group || groupadd "alarm"
             grep -Pq "^alarm:" /etc/passwd || useradd -m "alarm" -s "/bin/bash" -g "alarm"
             chown -R alarm:alarm ${PWD}
