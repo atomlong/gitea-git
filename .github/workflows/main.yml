@@ -1,0 +1,50 @@
+  
+name: makepkg CI
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: 30 15 * * *
+
+jobs:
+  build-gitea:
+    strategy:
+      matrix:
+        arch: ["armv7", "aarch64"]
+    runs-on: ubuntu-latest
+    name: Build on ${{ matrix.arch }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Run on Archlinuxarm
+      uses: atomlong/run-on-arch-action@v2.0.7
+      id: runcmd
+      with:
+          arch: ${{ matrix.arch }}
+          distro: archlinuxarm
+          run: |
+            pacman -Syu --needed --noconfirm base-devel rclone
+            grep -Pq "^alarm:" /etc/group || groupadd "alarm"
+            grep -Pq "^alarm:" /etc/passwd || useradd -m "alarm" -s "/bin/bash" -g "alarm"
+            chown -R alarm:alarm ${PWD}
+            (source PKGBUILD
+            [ -n "${makedepends}" ] && pacman -S --needed --noconfirm ${makedepends[@]}
+            [ -n "${depends}" ] && pacman -S --needed --noconfirm ${depends[@]}
+            )
+            runuser -u alarm -- makepkg -sr --nocheck --needed --noconfirm
+            echo ::set-output name=pkgfile0::$(ls *.pkg.tar.xz)
+            mkdir artifacts
+            mv *.pkg.tar.xz artifacts
+    - name: Upload artifacts to Onedrive
+      uses: atomlong/rclone-action@v1.1.1
+      env:
+        RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+      with:
+        args: copy artifacts/ onedrive:/mirrors/archlinuxarm/${{ matrix.arch }}/aur
+    - name: Print Package Files
+      run: |
+        echo "Successfully created the following package archive"
+        echo "Package: ${{ steps.runcmd.outputs.pkgfile0 }}"
+
