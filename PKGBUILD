@@ -27,7 +27,7 @@ optdepends=('mariadb: MariaDB support'
 backup=('etc/gitea/app.ini')
 conflicts=('gitea')
 provides=('gitea')
-source=(git+https://github.com/go-gitea/gitea.git
+source=(git+https://github.com/zeripath/gitea.git#branch=fix-13979-action-branch-trim-BranchPrefix
         gitea.tmpfiles
         gitea.service
         gitea.sysusers
