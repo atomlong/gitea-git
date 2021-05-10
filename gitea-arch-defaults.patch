@@ -1,51 +1,107 @@
---- a/custom/conf/app.example.ini
-+++ b/custom/conf/app.example.ini
-@@ -9,7 +9,7 @@
- ; App name that shows in every page title
- APP_NAME = Gitea: Git with a cup of tea
- ; Change it if you run locally
--RUN_USER = git
+diff --git "a/custom/conf/app.example.ini" "b/custom/conf/app.example.ini"
+index d0fe6150d..bc0c01b0b 100644
+--- "a/custom/conf/app.example.ini"
++++ "b/custom/conf/app.example.ini"
+@@ -15,7 +15,7 @@
+ APP_NAME = ; Gitea: Git with a cup of tea
+ ;;
+ ;; RUN_USER will automatically detect the current user - but you can set it here change it if you run locally
+-RUN_USER = ; git
 +RUN_USER = gitea
- ; Application run mode, affects performance and debugging. Either "dev", "prod" or "test", default is "prod"
- RUN_MODE = prod
- 
-@@ -20,7 +20,7 @@
- 
- [repository]
- ; Root path for storing all repository data. It must be an absolute path. By default, it is stored in a sub-directory of `APP_DATA_PATH`.
--ROOT =
-+ROOT = /var/lib/gitea/repos
- ; The script type this server supports. Usually this is `bash`, but some users report that only `sh` is available.
- SCRIPT_TYPE = bash
- ; DETECTED_CHARSETS_ORDER tie-break order for detected charsets.
-@@ -444,7 +444,7 @@
- ; For iterate buffer, default is 50
- ITERATE_BUFFER_SIZE = 50
- ; Show the database generated SQL
--LOG_SQL = true
-+LOG_SQL = false
- ; Maximum number of DB Connect retries
- DB_RETRIES = 10
- ; Backoff time per DB retry (time.Duration)
-@@ -903,10 +903,10 @@
- DEFAULT_UI_LOCATION =
- 
- [log]
--ROOT_PATH =
-+ROOT_PATH = /var/log/gitea/
- ; Either "console", "file", "conn", "smtp" or "database", default is "console"
- ; Use comma to separate multiple modes, e.g. "console, file"
+ ;;
+ ;; Application run mode, affects performance and debugging. Either "dev", "prod" or "test", default is "prod"
+ RUN_MODE = ; prod
+@@ -379,6 +379,9 @@ INTERNAL_TOKEN=
+ ;; Validate against https://haveibeenpwned.com/Passwords to see if a password has been exposed
+ ;PASSWORD_CHECK_PWN = false
+ ;;
++;; Token used for an internal API call authentication
++;INTERNAL_TOKEN = 
++;;
+ ;; Cache successful token hashes. API tokens are stored in the DB as pbkdf2 hashes however, this means that there is a potentially significant hashing load when there are multiple API operations.
+ ;; This cache will store the successfully hashed tokens in a LRU cache as a balance between performance and security.
+ ;SUCCESSFUL_TOKENS_CACHE_SIZE = 20
+@@ -435,14 +438,14 @@ TRUSTED_FACETS = ; e.g. http://localhost:3000/
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;; Root path for the log files - defaults to %(GITEA_WORK_DIR)/log
+-;ROOT_PATH =
++;ROOT_PATH = /var/log/gitea/
+ ;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;; Main Logger
+ ;;
+ ;; Either "console", "file", "conn", "smtp" or "database", default is "console"
+ ;; Use comma to separate multiple modes, e.g. "console, file"
 -MODE = console
 +MODE = console, file
- ; Buffer length of the channel, keep it as it is if you don't know what it is.
- BUFFER_LEN = 10000
- ; Either "Trace", "Debug", "Info", "Warn", "Error", "Critical", default is "Info"
-@@ -929,7 +929,7 @@
+ ;;
+ ;; Either "Trace", "Debug", "Info", "Warn", "Error", "Critical", default is "Trace"
+ LEVEL = Info
+@@ -738,10 +741,10 @@ PATH =
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  
- ; For "console" mode only
- [log.console]
--LEVEL =
-+LEVEL = Info
- STDERR = false
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+-;[repository]
++[repository]
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;; Root path for storing all repository data. It must be an absolute path. By default, it is stored in a sub-directory of `APP_DATA_PATH`.
+-;ROOT =
++ROOT = /var/lib/gitea/repos
+ ;;
+ ;; The script type this server supports. Usually this is `bash`, but some users report that only `sh` is available.
+ ;SCRIPT_TYPE = bash
+@@ -1169,7 +1172,7 @@ PATH =
  
- ; For "file" mode only
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+-;[indexer]
++[indexer]
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;
+@@ -1311,7 +1314,7 @@ PATH =
+ 
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+-;[openid]
++[openid]
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;
+@@ -1410,7 +1413,7 @@ PATH =
+ 
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+-;[mailer]
++[mailer]
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;
+@@ -1516,7 +1519,7 @@ PATH =
+ 
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+-;[session]
++[session]
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;
+@@ -1547,7 +1550,7 @@ PATH =
+ 
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+-;[picture]
++[picture]
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;
+@@ -1632,7 +1635,7 @@ PATH =
+ 
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+-;[time]
++[time]
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;;
